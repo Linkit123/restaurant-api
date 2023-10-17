@@ -1,6 +1,6 @@
 const express = require("express"); 
-const userRoutes = require('./v1/routes/userRoutes');
-const restaurantRoutes = require('./v1/routes/restaurantRoutes');
+const userRoutes = require('./v1/routes/user.routes');
+const restaurantRoutes = require('./v1/routes/restaurant.routes');
 const morgan = require('morgan');
 const AppError = require('./utils/appError')
 

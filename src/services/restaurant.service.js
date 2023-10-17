@@ -1,4 +1,4 @@
-const Restaurant = require("../models/restaurantModel");
+const Restaurant = require("../models/restaurant.model");
 
 class RestaurantService {
   async getAllRestaurant() {
