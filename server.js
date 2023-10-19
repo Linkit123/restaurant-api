@@ -7,7 +7,7 @@ dotenv.config({
 
 const port = process.env.PORT || 3000;
 const database = process.env.DATABASE;
-process.env.TZ = 'Asia/Bangkok';
+
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION!!! shutting down...");
   console.log(err.name, err.message);
