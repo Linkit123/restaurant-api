@@ -14,7 +14,7 @@ class TableService {
     }
   }
 
-  async createTableForRestaurant(req) {
+  async createRestaurantTable(req) {
     try {
       const restaurantId = req.params.restaurantId;
       const tableReqs = req.body;

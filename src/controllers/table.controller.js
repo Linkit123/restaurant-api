@@ -12,9 +12,9 @@ const findAllByRestaurantId = async (req, res) => {
   }
 };
 
-const createTableForRestaurant = async (req, res) => {
+const createRestaurantTable = async (req, res) => {
   try {
-    const data = await service.createTableForRestaurant(req);
+    const data = await service.createRestaurantTable(req);
     res.status(200).send({ status: "success", code: 200, data: data });
   } catch (error) {
     res.status(500).json({
@@ -24,4 +24,4 @@ const createTableForRestaurant = async (req, res) => {
   }
 };
 
-module.exports = { findAllByRestaurantId, createTableForRestaurant };
+module.exports = { findAllByRestaurantId, createRestaurantTable };
