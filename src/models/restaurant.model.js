@@ -40,21 +40,8 @@ const restaurantSchema = new mongoose.Schema({
       price: Number,
     },
   ],
-  tables: [
-    {
-      _id: {type: mongoose.Schema.Types.ObjectId, auto: true},
-      code: {
-        type: String,
-        require: true,
-        default: "T-000",
-      },
-      name: String,
-      capacity: Number,
-      rowIndex: Number,
-      columnIndex: Number,
-      type: { type: Number, enum: TableType, default: TableType.TABLE },
-    },
-  ],
+  // Thêm trường tables để lưu thông tin bàn
+  tables: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Table' }],
 });
 
 module.exports = mongoose.model("Restaurant", restaurantSchema);
