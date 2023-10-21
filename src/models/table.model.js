@@ -8,11 +8,7 @@ const tableSchema = new mongoose.Schema({
   restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
   createdDate: { type: Date, default: new Date() },
   updatedDate: { type: Date, default: new Date() },
-  code: {
-    type: String,
-    require: true,
-    default: "T-000",
-  },
+  code: {type: String, default: 'T_000'},
   name: String,
   capacity: Number,
   rowIndex: Number,
