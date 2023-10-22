@@ -12,9 +12,19 @@ class RestaurantService {
     }
   }
 
+  async findByLocationCode(locationCode) {
+    try {
+      const restaurants = await Restaurant.find({locationCode: locationCode}).lean();
+      return restaurants;
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error fetching restaurants");
+    }
+  }
+
   async createRestaurant(req) {
-    const restaurant = await Restaurant.findOne({ name: req.body.name });
-    if (!restaurant) {
+    const restaurantDuplicate = await Restaurant.findOne({ name: req.body.name });
+    if (restaurantDuplicate) {
       throw new Error("Restaurant name existed, please enter other name");
     }
     try {
@@ -33,8 +43,9 @@ class RestaurantService {
         images: req.body.images,
         menu: req.body.menu,
         tables: req.body.tables,
+        locationCode: req.body.locationCode
       });
-      return await restaurant.save().lean();
+      return await restaurant.save();
     } catch (error) {
       console.log(error);
       throw new Error("Error fetching restaurants");

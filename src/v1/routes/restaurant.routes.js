@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.get("/restaurants/findAll", restaurantController.getAllRestaurant);
 router.post("/restaurants", restaurantController.createRestaurant);
+router.get("/restaurants/:locationCode", restaurantController.findByLocationCode);
 
 module.exports = router;

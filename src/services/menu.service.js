@@ -28,7 +28,7 @@ class MenuService {
           code: `M_${GeneratorUtils.randomString()}`,
           restaurantId,
         }))
-      ).lean();
+      );
       return createMenu;
     } catch (error) {
       console.log(error);

@@ -44,10 +44,6 @@ class TableService {
       return { success: false, duplicateTables };
     }
 
-    if (!restaurant) {
-      throw new Error("Restaurant not found");
-    }
-
     try {
       const createdTables = await Table.create(
         tableReqs.map((table) => ({

@@ -16,7 +16,7 @@ process.on("uncaughtException", (err) => {
 
 // Connect the database
 mongoose
-  .connect(database)
+  .connect(database, {maxPoolSize: 50})
   .then((con) => {
     console.log("DB connection Successfully!");
   })

@@ -11,7 +11,7 @@ const restaurantSchema = new mongoose.Schema({
   updatedBy: String,
   status: {
     type: String,
-    enum: [Status.ACTIVE, Status.INACTIVE, Status.DELETED],
+    enum: Status,
     default: Status.ACTIVE,
   },
   code: {type: String, default: 'R_000'},
@@ -26,10 +26,11 @@ const restaurantSchema = new mongoose.Schema({
   reservedTables: Number,
   availableTables: Number,
   star: Number,
-  // Thêm trường menu để lưu thông tin thực đơn
-  menu: [{ type: mongoose.Schema.Types.ObjectId, ref: "Menu" }],
-  // Thêm trường tables để lưu thông tin bàn
-  tables: [{ type: mongoose.Schema.Types.ObjectId, ref: "Table" }],
+  locationCode: { type: String, ref: 'Location'},
+  // // Thêm trường menu để lưu thông tin thực đơn
+  // menu: [{ type: mongoose.Schema.Types.ObjectId, ref: "Menu" }],
+  // // Thêm trường tables để lưu thông tin bàn
+  // tables: [{ type: mongoose.Schema.Types.ObjectId, ref: "Table" }],
 });
 
 module.exports = mongoose.model("Restaurant", restaurantSchema);
