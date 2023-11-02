@@ -21,7 +21,7 @@ mongoose
     console.log("DB connection Successfully!");
   })
   .catch((err) => {
-    console.error("Database connection error");
+    console.error("Database connection error", err.reason.servers);
   });
 
 // Start the server

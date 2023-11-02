@@ -17,7 +17,7 @@ class CustomerService {
         phoneNumber: req.body.phoneNumber,
         email: req.body.email,
       });
-      return await customer.save().lean();
+      return await customer.save();
     } catch (error) {
       console.log(error);
       throw new Error("Error while creating customer");

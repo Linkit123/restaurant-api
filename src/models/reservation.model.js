@@ -3,7 +3,7 @@ const ReservationStatus = require("../constants/ReservationStatus");
 const GeneratorUtils = require("../utils/GeneratorUtils");
 
 // Định nghĩa Schema cho Restaurant
-const restaurantSchema = new mongoose.Schema({
+const reservationSchema = new mongoose.Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
   createdDate: { type: Date, default: new Date() },
   updatedDate: { type: Date, default: new Date() },
@@ -23,4 +23,4 @@ const restaurantSchema = new mongoose.Schema({
   tables: [{ type: mongoose.Schema.Types.Mixed, ref: "Table" }],
 });
 
-module.exports = mongoose.model("Restaurant", restaurantSchema);
+module.exports = mongoose.model("Reservation", reservationSchema);
