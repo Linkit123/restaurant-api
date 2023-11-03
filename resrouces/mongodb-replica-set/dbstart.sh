@@ -3,4 +3,4 @@
 # --force , -f      Don't ask to confirm removal
 # --stop , -s       Stop the containers, if required, before removing
 # --volumes , -v    Remove any anonymous volumes attached to containers
-docker-compose up -d && docker-compose rm -fsv mongo-rs-setup
+docker-compose up -d

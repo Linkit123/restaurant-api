@@ -47,7 +47,7 @@ services:
     networks:
       - mongors-network
     restart: "no"
-    entrypoint: "/scripts/rs-init.sh"
+    command: "/scripts/rs-init.sh"
 
 networks:
   mongors-network:
