@@ -2,9 +2,7 @@
  - cd resrouces/mongodb-replica-set
  - .\dbstart.sh
  - important: 
-   + if mongo-rs-setup service not working, check your EOL file of rs-init.sh
-      make sure EOL type is Unit(LF)
-      you can use notpadd++ to convert: Edit -> EOL Conversion -> Unit(LF)
+   + if mongo-rs-setup service not working, check your EOL file of rs-init.sh, make sure EOL type is Unit(LF). You can use notpadd++ to convert: Edit -> EOL Conversion -> Unit(LF)
    + set host in your computer -> 127.0.0.1 mongo1 mongo2 mongo3
 
 ## 2. connection string mongoDb replica set:
