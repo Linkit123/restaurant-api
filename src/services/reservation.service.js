@@ -18,18 +18,18 @@ class ReservationService {
     try {
       // save booking infomation
       const reservation = await Reservation.create(
-        {
+        [{
           code: "R_" + GeneratorUtils.randomString(),
           customer,
           restaurant,
           tables,
           menu,
-          numberOfTables: req.numberOfTables,
-          numberOfPeoples: req.numberOfPeoples,
-          checkInTime: req.checkInTime,
-          bookingDate: req.bookingDate,
-          specialRequest: req.specialRequest
-        },
+          numberOfTables: req.body.numberOfTables,
+          numberOfPeoples: req.body.numberOfPeoples,
+          checkInTime: req.body.checkInTime,
+          bookingDate: req.body.bookingDate,
+          specialRequest: req.body.specialRequest
+        }],
         {
           session: session,
         }
