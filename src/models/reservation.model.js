@@ -14,7 +14,13 @@ const reservationSchema = new mongoose.Schema({
   },
   code: { type: String, default: "REV_000" },
   numberOfTables: Number,
+  numberOfPeoples: Number,
   specialRequest: String,
+  checkInTime: String,
+  bookingDate: String,
+  specialRequest: String,
+  // Thêm trường customer để lưu thông tin khách
+  restaurant: { type: mongoose.Schema.Types.Mixed, ref: "Restaurant" },
   // Thêm trường customer để lưu thông tin khách
   customer: { type: mongoose.Schema.Types.Mixed, ref: "Customer" },
   // Thêm trường menu để lưu thông tin thực đơn

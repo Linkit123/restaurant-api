@@ -10,22 +10,32 @@ const GeneratorUtils = require("../utils/GeneratorUtils");
 class ReservationService {
   async reservations(req) {
     const session = await mongoose.startSession();
+    session.startTransaction();
+    const { customer: customerReq } = req.body;
+    // create customer if not exist
+    const customer = await this.updateCustomer(customerReq, session);
+    const { restaurant, menu, tables } = await this.validation(req);
     try {
-      session.startTransaction();
-      const { restaurant, meu, tables } = await this.validation(req);
-      const { customer: customerReq } = req.body;
-      // update customer
-      const filterCustomer = {
-        phoneNumber: customerReq.phoneNumber,
-        fullName: customerReq.fullName,
-      };
-      const customer = await Customer.findOneAndUpdate(
-        filterCustomer,
-        { fullName: customerReq.fullName },
-        { new: true, session: session }
+      // save booking infomation
+      const reservation = await Reservation.create(
+        {
+          code: "R_" + GeneratorUtils.randomString(),
+          customer,
+          restaurant,
+          tables,
+          menu,
+          numberOfTables: req.numberOfTables,
+          numberOfPeoples: req.numberOfPeoples,
+          checkInTime: req.checkInTime,
+          bookingDate: req.bookingDate,
+          specialRequest: req.specialRequest
+        },
+        {
+          session: session,
+        }
       );
-      await Reservation.create(req.body);
       await session.commitTransaction();
+      return reservation;
     } catch (error) {
       console.log(error);
       await session.abortTransaction();
@@ -33,8 +43,27 @@ class ReservationService {
     } finally {
       await session.endSession();
     }
+  }
 
-    return { success: true, data: "nothing" };
+  async updateCustomer(customerReq, session) {
+    const filterCustomer = {
+      phoneNumber: customerReq.phoneNumber,
+    };
+
+    try {
+      let customer = await Customer.findOneAndUpdate(
+        filterCustomer,
+        { fullName: customerReq.fullName },
+        { session }
+      ).lean();
+      if (!customer) {
+        customer = await Customer.create([customerReq], { session });
+      }
+      return customer[0];
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error while save customer");
+    }
   }
 
   async validation(req) {
@@ -50,7 +79,7 @@ class ReservationService {
       },
     }).lean();
 
-    if (!menu) {
+    if (!menu || menu.length == 0) {
       throw new Error("Menu not found");
     }
 
@@ -60,7 +89,7 @@ class ReservationService {
       },
     }).lean();
 
-    if (!tables) {
+    if (!tables || menu.length == tables) {
       throw new Error("Table not found");
     }
 

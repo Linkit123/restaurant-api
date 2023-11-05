@@ -15,13 +15,13 @@ class MenuService {
   }
 
   async createRestaurantMenu(req) {
+    const restaurantId = req.params.restaurantId;
+    const menuReqs = req.body;
+    const restaurant = await Restaurant.findOne({ _id: restaurantId }).lean();
+    if (!restaurant) {
+      throw new Error("Restaurant not found");
+    }
     try {
-      const restaurantId = req.params.restaurantId;
-      const menuReqs = req.body;
-      const restaurant = await Restaurant.findOne({ _id: restaurantId }).lean();
-      if (!restaurant) {
-        throw new Error("Restaurant not found");
-      }
       const createMenu = await Menu.create(
         menuReqs.map((menu) => ({
           ...menu,
@@ -32,7 +32,7 @@ class MenuService {
       return createMenu;
     } catch (error) {
       console.log(error);
-      throw new Error("Create Menu Fail");
+      throw new Error("Create Menu Fail, Something wrong!");
     }
   }
 }
