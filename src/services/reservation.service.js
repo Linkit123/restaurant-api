@@ -9,11 +9,11 @@ const GeneratorUtils = require("../utils/GeneratorUtils");
 
 class ReservationService {
   async reservations(req) {
-    const { restaurant, meu, tables } = await this.validation(req);
-    const { customer: customerReq } = req.body;
     const session = await mongoose.startSession();
     try {
       session.startTransaction();
+      const { restaurant, meu, tables } = await this.validation(req);
+      const { customer: customerReq } = req.body;
       // update customer
       const filterCustomer = {
         phoneNumber: customerReq.phoneNumber,
