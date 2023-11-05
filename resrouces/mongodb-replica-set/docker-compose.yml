@@ -4,19 +4,46 @@ services:
   mongo1:
     container_name: mongo1
     image: mongo
+    # depends_on:
+    #   - mongo-keyfile-setup
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: admin
+    #   MONGO_INITDB_ROOT_PASSWORD: admin@123
+    #   MONGO_INITDB_DATABASE: restaurant_db
     volumes:
       - mongo-data1:/data/db
+      - ./rs-init.sh:/data/rs-init.sh
+      # - ./auth/keyfile.txt:/data/keyfile.txt
     networks:
       - mongors-network
     ports:
       - 27021:27021
     restart: always
     entrypoint: "mongod --bind_ip_all --replSet dbrs --port 27021"
+    # entrypoint: >
+    #    bash -c "chmod 600 /data && mongod && sleep 10 && mongosh --eval '
+    #     use admin
+    #     db.createUser(
+    #       {
+    #         user: "siteAdmin",
+    #         pwd: "admin333",
+    #         roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+    #       }
+    #     );
+    #     db.createUser(
+    #       {
+    #         user: "siteRoot",
+    #         pwd: "root333",
+    #         roles: [ { role: "root", db: "admin" } ]
+    #       }
+    #     );\n'
+    #     && mongod --bind_ip_all --replSet dbrs --port 27021 --keyFile /data/keyfile.txt"
   mongo2:
     container_name: mongo2
     image: mongo
     volumes:
       - mongo-data2:/data/db
+      - ./auth/keyfile.txt:/data/keyfile.txt
     networks:
       - mongors-network
     ports:
@@ -28,27 +55,13 @@ services:
     image: mongo
     volumes:
       - mongo-data3:/data/db
+      - ./auth/keyfile.txt:/data/keyfile.txt
     networks:
       - mongors-network
     ports:
       - 27023:27023
     restart: always
     entrypoint: "mongod --bind_ip_all --replSet dbrs --port 27023"
-
-  mongo-rs-setup:
-    container_name: mongo-rs-setup
-    image: mongo
-    depends_on:
-      - mongo1
-      - mongo2
-      - mongo3
-    volumes:
-      - ./rs-init.sh:/scripts/rs-init.sh
-    networks:
-      - mongors-network
-    restart: "no"
-    command: "/scripts/rs-init.sh"
-
 networks:
   mongors-network:
     driver: bridge

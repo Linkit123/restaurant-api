@@ -21,3 +21,7 @@
     + rs.initiate(): init rs
     + rs.status(): check rs status
     + rs.reconfig(): reinit rs
+
+## run with auth - (WIP)
+ - install openssl
+ - create keyfile: openssl rand -base64 756 > keyfile

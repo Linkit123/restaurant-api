@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sleep 5
 mongosh mongo1:27021 <<EOF
 var config = {
     "_id": "dbrs",
